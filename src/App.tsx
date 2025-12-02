@@ -5,8 +5,8 @@ import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 
 export default function App() {
-  const [formType, setFormType] = useState<"login" | "register">("login");
-
+  const [formType, setFormType] = useState<"login" | "register">("login");  
+  
   return (
     <Box
       sx={{

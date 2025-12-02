@@ -13,6 +13,7 @@ import {
   Radio,
 } from "@mui/material";
 import { formatPhone } from "../utils/formatPhone";
+import { useNavigate } from "react-router-dom";
 
 const registerSchema = yup.object({
   fullName: yup.string().required("Nome completo obrigatório"),
@@ -44,15 +45,16 @@ type RegisterProps = {
 export const Register = ({ setFormType }: RegisterProps) => {
   const {
     register,
-    handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: yupResolver(registerSchema),
   });
+  const navigate = useNavigate();
 
   const onSubmit = (data: RegisterFormData) => {
     localStorage.setItem("user", JSON.stringify(data));
-    setFormType?.("login");
+    navigate("/login")
   };
 
   return (
@@ -71,7 +73,7 @@ export const Register = ({ setFormType }: RegisterProps) => {
       </Typography>
 
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={() => onSubmit}
         style={{
           width: "100%",
           maxWidth: 420,
@@ -103,7 +105,10 @@ export const Register = ({ setFormType }: RegisterProps) => {
           fullWidth
           margin="normal"
           {...register("phone")}
-          onChange={(e) => (e.target.value = formatPhone(e.target.value))}
+          onChange={(e) => {
+            const formatted = formatPhone(e.target.value);
+            setValue("phone", formatted, { shouldValidate: true, shouldDirty: true });
+          }}
           error={!!errors.phone}
           helperText={errors.phone?.message}
         />
