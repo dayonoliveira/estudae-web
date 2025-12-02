@@ -10,7 +10,7 @@ import {
   FormLabel,
   RadioGroup,
   FormControlLabel,
-  Radio
+  Radio,
 } from "@mui/material";
 import { formatPhone } from "../utils/formatPhone";
 
@@ -19,8 +19,12 @@ const registerSchema = yup.object({
   email: yup.string().email("Email inválido").required("Email obrigatório"),
   phone: yup.string().required("Telefone obrigatório"),
   institution: yup.string().required("Instituição obrigatória"),
-  role: yup.string().oneOf(["aluno", "doador"], "Selecione um tipo").required(),
+  role: yup.string().required("Selecione uma opção"),
   password: yup.string().required("Senha obrigatória"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "As senhas devem ser iguais")
+    .required("Confirmação obrigatória"),
 });
 
 type RegisterFormData = {
@@ -28,54 +32,52 @@ type RegisterFormData = {
   email: string;
   phone: string;
   institution: string;
-  role: "aluno" | "doador";
+  role: string;
   password: string;
+  confirmPassword: string;
 };
 
-type RegisterType = {
+type RegisterProps = {
   setFormType?: React.Dispatch<React.SetStateAction<"login" | "register">>;
-}
+};
 
-export const Register = ({ setFormType }: RegisterType) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormData>({
+export const Register = ({ setFormType }: RegisterProps) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData>({
     resolver: yupResolver(registerSchema),
   });
 
   const onSubmit = (data: RegisterFormData) => {
-    console.log("Dados enviados:", data);
+    localStorage.setItem("user", JSON.stringify(data));
+    setFormType?.("login");
   };
 
   return (
     <Box
       sx={{
-        background: "rgba(255, 255, 255, 0.05)",
-        borderRadius: "12px",
-        width: "420px",
+        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        padding: "24px",
-        boxSizing: "border-box",
+        alignItems: "center",
+        padding: { xs: 2, md: 4 },
+        gap: 3,
       }}
     >
-      <Typography
-        variant="h3"
-        sx={{ fontWeight: 700, textAlign: "center", mb: 2 }}
-      >
-        Obrigado por fazer parte 💙
-      </Typography>
-
-      <Typography
-        variant="subtitle1"
-        sx={{ textAlign: "center", mb: 3 }}
-      >
-        Juntos, podemos transformar vidas através da educação.
+      <Typography variant="h3" sx={{ textAlign: "center" }}>
+        Criar Conta
       </Typography>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
-          display: "flex",
-          flexDirection: "column"
+          width: "100%",
+          maxWidth: 420,
+          background: "rgba(255,255,255,0.05)",
+          padding: 24,
+          borderRadius: 12,
         }}
       >
         <TextField
@@ -97,20 +99,17 @@ export const Register = ({ setFormType }: RegisterType) => {
         />
 
         <TextField
-        label="Telefone para contato"
-        fullWidth
-        margin="normal"
-        {...register("phone")}
-        onChange={(e) => {
-            const formatted = formatPhone(e.target.value);
-            e.target.value = formatted;
-        }}
-        error={!!errors.phone}
-        helperText={errors.phone?.message}
+          label="Telefone"
+          fullWidth
+          margin="normal"
+          {...register("phone")}
+          onChange={(e) => (e.target.value = formatPhone(e.target.value))}
+          error={!!errors.phone}
+          helperText={errors.phone?.message}
         />
 
         <TextField
-          label="Escola / Instituição"
+          label="Instituição"
           fullWidth
           margin="normal"
           {...register("institution")}
@@ -118,17 +117,12 @@ export const Register = ({ setFormType }: RegisterType) => {
           helperText={errors.institution?.message}
         />
 
-        <FormControl margin="normal">
+        <FormControl fullWidth margin="normal">
           <FormLabel>Você é:</FormLabel>
           <RadioGroup row {...register("role")}>
             <FormControlLabel value="aluno" control={<Radio />} label="Aluno" />
             <FormControlLabel value="doador" control={<Radio />} label="Doador" />
           </RadioGroup>
-          {errors.role && (
-            <Typography variant="caption" color="error">
-              {errors.role.message}
-            </Typography>
-          )}
         </FormControl>
 
         <TextField
@@ -141,17 +135,25 @@ export const Register = ({ setFormType }: RegisterType) => {
           helperText={errors.password?.message}
         />
 
-        <Button type="submit" variant="contained" sx={{ mt: 2 }}>
-          Criar Conta
+        <TextField
+          label="Confirmar senha"
+          type="password"
+          fullWidth
+          margin="normal"
+          {...register("confirmPassword")}
+          error={!!errors.confirmPassword}
+          helperText={errors.confirmPassword?.message}
+        />
+
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 2 }}>
+          Registrar
         </Button>
 
-        <Typography sx={{ mt: 2, textAlign: "center" }}>
+        <Typography sx={{ mt: 2 }}>
           Já possui uma conta?{" "}
-          <Button color="inherit" onClick={() => setFormType && setFormType("login")}>
-            Entrar
-          </Button>
+          <Button onClick={() => setFormType?.("login")}>Login</Button>
         </Typography>
       </form>
     </Box>
   );
-}
+};

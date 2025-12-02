@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography, Paper } from "@mui/material";
+import { Avatar, Box, Typography, Paper, useMediaQuery, useTheme } from "@mui/material";
 import { useState, useRef, useEffect } from "react";
 import { UserCard } from "./UserCard";
 import { useNavigate } from "react-router-dom";
@@ -7,19 +7,18 @@ import LogoutIcon from "@mui/icons-material/Logout";
 const getInitials = (name: string) => {
   const parts = name.split(" ");
   if (parts.length === 1) return parts[0][0].toUpperCase();
-  return (
-    parts[0][0].toUpperCase() +
-    parts[parts.length - 1][0].toUpperCase()
-  );
+  return parts[0][0].toUpperCase() + parts[parts.length - 1][0].toUpperCase();
 };
 
 export const Account = ({ user }: { user: any }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openCard, setOpenCard] = useState(false);
-
   const menuRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   useEffect(() => {
     const clickOutside = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -27,7 +26,6 @@ export const Account = ({ user }: { user: any }) => {
       }
     };
     document.addEventListener("mousedown", clickOutside);
-
     return () => document.removeEventListener("mousedown", clickOutside);
   }, []);
 
@@ -38,7 +36,6 @@ export const Account = ({ user }: { user: any }) => {
 
   return (
     <Box sx={{ position: "relative" }} ref={menuRef}>
-
       <Box
         sx={{
           display: "flex",
@@ -49,11 +46,11 @@ export const Account = ({ user }: { user: any }) => {
         }}
         onClick={() => setOpenMenu((prev) => !prev)}
       >
-        <Avatar sx={{ bgcolor: "#666", width: 38, height: 38 }}>
+        <Avatar sx={{ bgcolor: "#666", width: 36, height: 36 }}>
           {user ? getInitials(user.name) : "?"}
         </Avatar>
 
-        <Typography sx={{ fontWeight: 500, fontSize: "0.95rem" }}>
+        <Typography sx={{ fontSize: { xs: "0.8rem", sm: "0.95rem" } }}>
           Conta
         </Typography>
       </Box>
@@ -62,25 +59,22 @@ export const Account = ({ user }: { user: any }) => {
         <Paper
           sx={{
             position: "absolute",
-            top: "52px",
+            ...(isMobile
+              ? { bottom: "48px", boxShadow: "0 -6px 18px rgba(0,0,0,0.18)" }
+              : { top: "48px", boxShadow: "0 6px 18px rgba(0,0,0,0.18)" }),
             right: 0,
             width: 180,
             borderRadius: "12px",
-            boxShadow: "0 6px 18px rgba(0,0,0,0.18)",
             zIndex: 30,
             overflow: "hidden",
-            fontFamily: "inherit",
+            backgroundColor: "white",
           }}
         >
-
           <Box
             sx={{
               padding: "12px 18px",
               cursor: "pointer",
-              "&:hover": { background: "#f7f7f7" },
-              fontSize: "0.95rem",
-              display: "flex",
-              alignItems: "center",
+              "&:hover": { background: "#f5f5f5" },
             }}
             onClick={() => {
               setOpenCard(true);
@@ -90,26 +84,23 @@ export const Account = ({ user }: { user: any }) => {
             Ver dados
           </Box>
 
-          <Box sx={{ height: "1px", background: "#e2e2e2" }} />
+          <Box sx={{ height: "1px", background: "#ddd" }} />
 
           <Box
             sx={{
               padding: "12px 18px",
               cursor: "pointer",
-              color: "#d0342c",
-              fontWeight: 500,
-              fontSize: "0.95rem",
+              color: "red",
               display: "flex",
-              alignItems: "center",
               gap: 1,
-              "&:hover": { background: "#fdeaea" },
+              alignItems: "center",
+              "&:hover": { background: "#ffe6e6" },
             }}
             onClick={logout}
           >
             <LogoutIcon fontSize="small" />
             Sair
           </Box>
-
         </Paper>
       )}
 

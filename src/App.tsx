@@ -1,9 +1,8 @@
 import { Box, Typography } from "@mui/material";
-
-import Login from "./pages/Login";
 import estudaeImg from "./assets/estudar.png";
 import { useState } from "react";
 import { Register } from "./pages/Register";
+import { Login } from "./pages/Login";
 
 export default function App() {
   const [formType, setFormType] = useState<"login" | "register">("login");
@@ -16,40 +15,49 @@ export default function App() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        gap: "240px",          
-        p: 0, 
-        m: 0,                  
+        gap: { xs: 0, md: 15, lg: 30 },
+        overflowX: "hidden",
+        backgroundColor: "background.default",
+        padding: { xs: 2, sm: 3 },
+        maxWidth: "100vw",
+        boxSizing: "border-box",
       }}
     >
       <Box
-          sx={{
-            backgroundColor: "rgba(255,255,255,0.05)",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
+        sx={{
+          display: { xs: "none", md: "flex" }, 
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+          maxWidth: "450px",
+        }}
+      >
+        <img
+          src={estudaeImg}
+          alt="Estudar"
+          style={{
+            width: "100%",
+            maxWidth: "400px",
+            marginBottom: "20px",
           }}
-        >
-          <img
-            src={estudaeImg}
-            alt="Estudar"
-            style={{
-              width: "70%",
-              maxWidth: "400px",
-              marginBottom: "20px",
-            }}
-          />
+        />
 
-          <Typography variant="h4" sx={{ color: "#000000", mb: 2 }}>
-            Educação acessível começa com um gesto.
-          </Typography>
+        <Typography variant="h4" sx={{ color: "#000000", mb: 2 }}>
+          Educação acessível começa com um gesto.
+        </Typography>
 
-          <Typography variant="subtitle1" sx={{ color: "#000000", fontSize: "20px" }}>
-            Doe, empreste ou encontre o livro ideal para seu estudo.
-          </Typography>
-        </Box>
-        {formType === "login" ? (<Login setFormType={setFormType}/>) : (<Register setFormType={setFormType}/>)}
+        <Typography variant="subtitle1" sx={{ color: "#000000", fontSize: "20px" }}>
+          Doe, empreste ou encontre o livro ideal para seu estudo.
+        </Typography>
+      </Box>
+      <Box sx={{ width: { xs: "100%", md: "auto" }, display: "flex", justifyContent: "center" }}>
+        {formType === "login" ? (
+          <Login setFormType={setFormType} />
+        ) : (
+          <Register setFormType={setFormType} />
+        )}
+      </Box>
     </Box>
   );
 }

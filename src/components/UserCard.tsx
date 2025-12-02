@@ -31,53 +31,72 @@ export const UserCard = ({ onClose }: { onClose: () => void }) => {
         position: "fixed",
         top: 0,
         left: 0,
-        width: "100vw",
+        right: 0,
+        width: "100%",
         height: "100vh",
         bgcolor: "rgba(0,0,0,0.4)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        padding: { xs: 2, md: 0 },
+        zIndex: 2000,
+        overflowY: "auto",
+        transform: "translateX(-15px)",
+        "@media (min-width: 600px)": {
+          transform: "none",
+        },
       }}
     >
       <Paper
         onClick={(e) => e.stopPropagation()}
         sx={{
-          width: 400,
-          padding: 3,
+          width: "100%",
+          maxWidth: { xs: 320, sm: 380, md: 420 },
+          padding: { xs: 2, sm: 3 },
           borderRadius: 3,
+          position: "relative",
+          maxHeight: { xs: "90vh", md: "auto" },
+          overflowY: "auto",
         }}
       >
-        <Typography variant="h5" sx={{ mb: 2 }}>
+        <Typography
+          variant="h5"
+          sx={{
+            mb: 2,
+            textAlign: "center",
+            fontSize: { xs: "1.2rem", sm: "1.5rem" },
+          }}
+        >
           Meu Perfil
         </Typography>
 
         <TextField
-          fullWidth
           label="Nome completo"
+          fullWidth
           margin="normal"
           value={data.name}
           onChange={(e) => handleChange("name", e.target.value)}
         />
 
         <TextField
-          fullWidth
           label="Telefone"
+          fullWidth
           margin="normal"
           value={data.phone || ""}
           onChange={(e) => handleChange("phone", e.target.value)}
         />
 
         <TextField
+          label="Instituição"
           fullWidth
-          label="Instituição de ensino"
           margin="normal"
           value={data.institution}
           onChange={(e) => handleChange("institution", e.target.value)}
         />
 
         <TextField
-          fullWidth
           label="Tipo de usuário"
+          fullWidth
           margin="normal"
           value={data.role}
           onChange={(e) => handleChange("role", e.target.value)}
@@ -85,7 +104,12 @@ export const UserCard = ({ onClose }: { onClose: () => void }) => {
 
         <Button
           variant="contained"
-          sx={{ mt: 2 }}
+          sx={{
+            mt: 2,
+            fontSize: { xs: "0.85rem", sm: "1rem" },
+            py: { xs: 1, sm: 1.2 },
+          }}
+          fullWidth
           onClick={saveChanges}
         >
           Salvar alterações
