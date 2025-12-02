@@ -37,57 +37,56 @@ export const UserCard = ({ onClose }: { onClose: () => void }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        padding: { xs: 2, md: 0 },
+        zIndex: 1000,
       }}
     >
       <Paper
         onClick={(e) => e.stopPropagation()}
         sx={{
-          width: 400,
+          width: "100%",
+          maxWidth: 420,
           padding: 3,
           borderRadius: 3,
         }}
       >
-        <Typography variant="h5" sx={{ mb: 2 }}>
+        <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
           Meu Perfil
         </Typography>
 
         <TextField
-          fullWidth
           label="Nome completo"
+          fullWidth
           margin="normal"
           value={data.name}
           onChange={(e) => handleChange("name", e.target.value)}
         />
 
         <TextField
-          fullWidth
           label="Telefone"
+          fullWidth
           margin="normal"
           value={data.phone || ""}
           onChange={(e) => handleChange("phone", e.target.value)}
         />
 
         <TextField
+          label="Instituição"
           fullWidth
-          label="Instituição de ensino"
           margin="normal"
           value={data.institution}
           onChange={(e) => handleChange("institution", e.target.value)}
         />
 
         <TextField
-          fullWidth
           label="Tipo de usuário"
+          fullWidth
           margin="normal"
           value={data.role}
           onChange={(e) => handleChange("role", e.target.value)}
         />
 
-        <Button
-          variant="contained"
-          sx={{ mt: 2 }}
-          onClick={saveChanges}
-        >
+        <Button variant="contained" sx={{ mt: 2 }} fullWidth onClick={saveChanges}>
           Salvar alterações
         </Button>
       </Paper>

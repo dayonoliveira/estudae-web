@@ -8,15 +8,19 @@ export const SearchBar = () => {
         display: "flex",
         alignItems: "center",
         padding: "4px 10px",
-        width: "45%",
+        width: "100%",
         background: "white",
         borderRadius: "12px",
       }}
     >
-      <SearchIcon sx={{ color: "#555" }} />
+      <SearchIcon sx={{ color: "#555", fontSize: { xs: 20, sm: 24 } }} />
       <InputBase
         placeholder="Buscar usuários..."
-        sx={{ marginLeft: 1, flex: 1 }}
+        sx={{
+          marginLeft: 1,
+          flex: 1,
+          fontSize: { xs: "0.85rem", sm: "1rem" },
+        }}
       />
     </Paper>
   );

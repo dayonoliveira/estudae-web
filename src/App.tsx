@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
 
-import Login from "./pages/Login";
 import estudaeImg from "./assets/estudar.png";
 import { useState } from "react";
 import { Register } from "./pages/Register";
+import { Login } from "./pages/Login";
 
 export default function App() {
   const [formType, setFormType] = useState<"login" | "register">("login");

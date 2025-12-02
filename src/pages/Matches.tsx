@@ -14,10 +14,12 @@ export const Matches = () => {
 
   return (
     <Layout user={user}>
-      <Box sx={{ padding: 4 }}>
-        <Typography variant="h4">Encontros</Typography>
+      <Box sx={{ padding: { xs: 2, md: 4 } }}>
+        <Typography variant="h4" sx={{ mb: 2 }}>
+          Encontros
+        </Typography>
 
-        <Typography variant="h6" sx={{ mt: 2, color: "#666" }}>
+        <Typography variant="h6" sx={{ color: "#777" }}>
           Você não possui encontros marcados no momento.
         </Typography>
       </Box>

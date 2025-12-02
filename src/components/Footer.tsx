@@ -4,18 +4,19 @@ export const Footer = () => {
   return (
     <Box
       sx={{
-        background: "#0b3a6d",
+        background: "#000",
         padding: "20px 0",
         textAlign: "center",
-        color: "#fff",
-        mt: 4
+        color: "#ddd",
+        mt: 4,
+        fontSize: { xs: "0.8rem", sm: "0.9rem" },
       }}
     >
-      <Typography variant="body1">
+      <Typography>
         Criado pela <strong>Equipe de Alunos Unifor</strong>
       </Typography>
 
-      <Typography variant="body2" sx={{ mt: 1 }}>
+      <Typography sx={{ mt: 1 }}>
         © {new Date().getFullYear()} — Todos os direitos reservados.
       </Typography>
     </Box>

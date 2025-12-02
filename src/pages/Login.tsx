@@ -17,100 +17,104 @@ type LoginFormData = {
 
 type LoginType = {
   setFormType?: React.Dispatch<React.SetStateAction<"login" | "register">>;
-}
+};
 
-export default function Login({ setFormType }: LoginType) {
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
+export const Login = ({ setFormType }: LoginType) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
     resolver: yupResolver(loginSchema),
   });
+
   const navigate = useNavigate();
 
-  const onSubmit = (data: LoginFormData) => {
+  const onSubmit = () => {
     const fakeUser = {
-      name: "Thiago Sousa",
-      email: "emailthiagoparateste@gmail.com",
-      institution: "Escola Dayon de Linguas Estrangeiras",
+      name: "Ticiane Vasconcelos",
+      email: "ticiane777@gmail.com",
+      institution: "Escola Parque Estudantil Guadalajara",
       role: "volunteer",
-      phone: "11111111111",
-    }
+      phone: "98232151421",
+    };
 
-    localStorage.setItem("user", JSON.stringify(fakeUser))
-    navigate("/home")
+    localStorage.setItem("user", JSON.stringify(fakeUser));
+    navigate("/home");
   };
 
   return (
-    <Box     
-        style={{
+    <Box
+      sx={{
+        minHeight: "100vh",
         display: "flex",
-        justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        justifyContent: "center",
         flexDirection: "column",
-        gap: "40px"
-    }}>
-        <Typography
-          variant="h1"
-          component="h1"
-          sx={{
-            fontSize: { xs: "2.75rem", sm: "3.5rem" },
-            fontWeight: 800,
-            letterSpacing: -1,
-            textAlign: "center",
-          }}
-        >
-          ESTUDAE
+        gap: 4,
+        padding: { xs: 2, md: 0 },
+      }}
+    >
+      <Typography
+        variant="h1"
+        sx={{
+          fontSize: { xs: "2.4rem", sm: "3.5rem" },
+          fontWeight: 800,
+          textAlign: "center",
+        }}
+      >
+        ESTUDAE
+      </Typography>
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        style={{
+          width: "100%",
+          maxWidth: 420,
+          background: "rgba(255, 255, 255, 0.05)",
+          borderRadius: 12,
+          padding: 24,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Typography variant="h4" sx={{ mb: 2 }}>
+          Login
         </Typography>
-        
-        <form
-            onSubmit={handleSubmit(onSubmit)}
-            style={{
-                background: "rgba(255, 255, 255, 0.05)",
-                borderRadius: "12px",
-                width: "420px",
-                display: "flex",
-                flexDirection: "column"
-            }}>
-                <Typography variant="h4">
-                    Login
-                </Typography>
-            <TextField
-            sx={{color: 'white'}}
-            label="Email"
-            fullWidth
-            margin="normal"
-            {...register("email")}
-            error={!!errors.email}
-            helperText={errors.email?.message}
-            />
 
-            <TextField
-            label="Senha"
-            type="password"
-            fullWidth
-            margin="normal"
-            {...register("password")}
-            error={!!errors.password}
-            helperText={errors.password?.message}
-            />
-            <Button 
-            sx={{fontSize: "20px"}} 
-            color="info" 
-            type="submit">
-              Entrar
-            </Button>
-        </form>
+        <TextField
+          label="Email"
+          fullWidth
+          margin="normal"
+          {...register("email")}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+        />
 
-        <Box>
-            <Typography>
-                Ainda não possui uma conta?
-                {" "}
-                <Button color="inherit" onClick={() => setFormType && setFormType("register")
-                  }>
-                    Criar Conta
-                </Button>
-            </Typography>
-        </Box>
+        <TextField
+          label="Senha"
+          type="password"
+          fullWidth
+          margin="normal"
+          {...register("password")}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+        />
+
+        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+          Entrar
+        </Button>
+      </form>
+
+      <Typography>
+        Ainda não possui uma conta?{" "}
+        <Button
+          color="inherit"
+          onClick={() => setFormType?.("register")}
+        >
+          Criar Conta
+        </Button>
+      </Typography>
     </Box>
   );
 }
-

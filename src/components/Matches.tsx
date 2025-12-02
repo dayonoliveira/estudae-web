@@ -17,10 +17,10 @@ export const Matches = () => {
       }}
     >
       <IconButton sx={{ color: "white" }}>
-        <CalendarMonthIcon />
+        <CalendarMonthIcon fontSize="small" />
       </IconButton>
 
-      <Typography sx={{ fontWeight: 500, fontSize: "0.95rem" }}>
+      <Typography sx={{ fontSize: { xs: "0.8rem", sm: "0.95rem" } }}>
         Encontros
       </Typography>
     </Box>
