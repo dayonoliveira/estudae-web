@@ -46,21 +46,24 @@ export const Login = ({ setFormType }: LoginType) => {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
         gap: 4,
-        padding: { xs: 2, md: 0 },
+        width: "100%",
+        boxSizing: "border-box",
+        overflowX: "hidden",
+        px: { xs: 2, sm: 3 },
       }}
     >
       <Typography
         variant="h1"
         sx={{
-          fontSize: { xs: "2.4rem", sm: "3.5rem" },
+          fontSize: { xs: "2.2rem", sm: "3rem" },
           fontWeight: 800,
           textAlign: "center",
+          color: "#333",
         }}
       >
         ESTUDAE
@@ -70,15 +73,20 @@ export const Login = ({ setFormType }: LoginType) => {
         onSubmit={handleSubmit(onSubmit)}
         style={{
           width: "100%",
-          maxWidth: 420,
-          background: "rgba(255, 255, 255, 0.05)",
+          maxWidth: "380px",
+          backgroundColor: "rgba(0, 0, 0, 0.05)",
           borderRadius: 12,
-          padding: 24,
+          padding: "24px",
           display: "flex",
           flexDirection: "column",
+          boxSizing: "border-box",
+          margin: "0 auto",
         }}
       >
-        <Typography variant="h4" sx={{ mb: 2 }}>
+        <Typography
+          variant="h4"
+          style={{ marginBottom: "16px", fontSize: "1.6rem" }}
+        >
           Login
         </Typography>
 
@@ -89,6 +97,7 @@ export const Login = ({ setFormType }: LoginType) => {
           {...register("email")}
           error={!!errors.email}
           helperText={errors.email?.message}
+          sx={{ backgroundColor: "white", borderRadius: 1 }}
         />
 
         <TextField
@@ -99,18 +108,25 @@ export const Login = ({ setFormType }: LoginType) => {
           {...register("password")}
           error={!!errors.password}
           helperText={errors.password?.message}
+          sx={{ backgroundColor: "white", borderRadius: 1 }}
         />
 
-        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+        <Button
+          type="submit"
+          variant="contained"
+          fullWidth
+          sx={{ mt: 2, py: 1.5, fontSize: "1rem" }}
+        >
           Entrar
         </Button>
       </form>
 
-      <Typography>
+      <Typography sx={{ textAlign: "center" }}>
         Ainda não possui uma conta?{" "}
         <Button
-          color="inherit"
+          color="primary"
           onClick={() => setFormType?.("register")}
+          sx={{ fontWeight: "bold" }}
         >
           Criar Conta
         </Button>

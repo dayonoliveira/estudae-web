@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useNavigate } from "react-router-dom";
 
@@ -11,16 +11,23 @@ export const Matches = () => {
       sx={{
         display: "flex",
         alignItems: "center",
-        gap: 1,
         cursor: "pointer",
         color: "white",
       }}
     >
-      <IconButton sx={{ color: "white" }}>
-        <CalendarMonthIcon fontSize="small" />
-      </IconButton>
+      <Box
+        sx={{
+          color: "white",
+          minWidth: 40,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CalendarMonthIcon />
+      </Box>
 
-      <Typography sx={{ fontSize: { xs: "0.8rem", sm: "0.95rem" } }}>
+      <Typography sx={{ fontSize: { xs: "1.1rem", sm: "1.1rem" } }}>
         Encontros
       </Typography>
     </Box>

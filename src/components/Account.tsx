@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography, Paper } from "@mui/material";
+import { Avatar, Box, Typography, Paper, useMediaQuery, useTheme } from "@mui/material";
 import { useState, useRef, useEffect } from "react";
 import { UserCard } from "./UserCard";
 import { useNavigate } from "react-router-dom";
@@ -7,18 +7,17 @@ import LogoutIcon from "@mui/icons-material/Logout";
 const getInitials = (name: string) => {
   const parts = name.split(" ");
   if (parts.length === 1) return parts[0][0].toUpperCase();
-  return (
-    parts[0][0].toUpperCase() +
-    parts[parts.length - 1][0].toUpperCase()
-  );
+  return parts[0][0].toUpperCase() + parts[parts.length - 1][0].toUpperCase();
 };
 
 export const Account = ({ user }: { user: any }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openCard, setOpenCard] = useState(false);
-
   const menuRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     const clickOutside = (e: MouseEvent) => {
@@ -27,7 +26,6 @@ export const Account = ({ user }: { user: any }) => {
       }
     };
     document.addEventListener("mousedown", clickOutside);
-
     return () => document.removeEventListener("mousedown", clickOutside);
   }, []);
 
@@ -38,7 +36,6 @@ export const Account = ({ user }: { user: any }) => {
 
   return (
     <Box sx={{ position: "relative" }} ref={menuRef}>
-
       <Box
         sx={{
           display: "flex",
@@ -62,13 +59,15 @@ export const Account = ({ user }: { user: any }) => {
         <Paper
           sx={{
             position: "absolute",
-            top: "48px",
+            ...(isMobile
+              ? { bottom: "48px", boxShadow: "0 -6px 18px rgba(0,0,0,0.18)" }
+              : { top: "48px", boxShadow: "0 6px 18px rgba(0,0,0,0.18)" }),
             right: 0,
             width: 180,
             borderRadius: "12px",
-            boxShadow: "0 6px 18px rgba(0,0,0,0.18)",
             zIndex: 30,
             overflow: "hidden",
+            backgroundColor: "white",
           }}
         >
           <Box
